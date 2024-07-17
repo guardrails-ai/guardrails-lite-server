@@ -48,4 +48,4 @@ EXPOSE 8000
 # The guardrails-api is a standard Flask application.
 # You can use whatever production server you want that support Flask.
 # Here we use gunicorn
-CMD gunicorn --bind 0.0.0.0:8000 --timeout=90 --threads=10 'guardrails_api.app:create_app(None, "config.py")'
+CMD gunicorn --bind 0.0.0.0:8000 --timeout=90 --workers=4 'guardrails_api.app:create_app(None, "config.py")'
