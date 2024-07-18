@@ -1,11 +1,8 @@
 FROM public.ecr.aws/docker/library/python:3.12-slim
 
-# Copy the .guardrailsrc file
-# The .guardrailsrc file included in this repository turns off anonymous metrics.
-# We turn off metrics to prevent spamming ourselves from our own dev servers.
-# You may or may not have other reasons for doing so.
-# In the future, this file may include other configuration options
-COPY .guardrailsrc /root/.guardrailsrc
+# Accept a build arg for the Guardrails token
+# We'll add this to the config using the configure command below
+ARG GUARDRAILS_TOKEN
 
 # Create app directory
 WORKDIR /app
@@ -34,6 +31,9 @@ ENV NLTK_DATA=/opt/nltk_data
 
 # Download punkt data
 RUN python -m nltk.downloader -d /opt/nltk_data punkt
+
+# Run the Guardrails configure command to create a .guardrailsrc file
+RUN guardrails configure --enable-metrics --enable-remote-inferencing  --token $GUARDRAILS_TOKEN
 
 # Install any validators from the hub you want
 RUN guardrails hub install hub://guardrails/regex_match
