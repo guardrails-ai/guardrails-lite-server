@@ -10,7 +10,7 @@ install-lock:
 	pip install -r requirements-lock.txt
 
 env:
-	python3 -m venv .venv
+	python3 -m venv ./.venv
 
 build: install-lock
 	@echo "\n\nDownloading NLTK punkt tokenizer; this may take a while...\n\n"
