@@ -2,3 +2,5 @@ Dockerfile
 *.env
 Makefile
 buildscripts
+guardrails-server
+*.tar
