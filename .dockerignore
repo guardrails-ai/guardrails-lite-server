@@ -2,3 +2,4 @@ Dockerfile
 *.env
 Makefile
 buildscripts
+.venv
