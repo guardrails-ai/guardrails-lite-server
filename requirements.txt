@@ -1,2 +1,3 @@
-guardrails-ai[api]>=0.7.2
-uvicorn[standard]
+guardrails-ai>=0.10.2
+guardrails-api>=0.4.3
+guardrails-ai-regex-match

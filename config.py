@@ -1,5 +1,5 @@
 from guardrails import Guard
-from guardrails.hub import RegexMatch
+from guardrails_ai.regex_match import RegexMatch
 
 name_case = Guard(
     name='name-case',

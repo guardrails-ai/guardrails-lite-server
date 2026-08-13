@@ -1,10 +1,6 @@
 # Start our builder image in the multi-stage build
 FROM public.ecr.aws/docker/library/python:3.13-slim AS builder
 
-# Accept a build arg for the Guardrails token
-# We'll add this to the config using the configure command below
-ARG GUARDRAILS_TOKEN
-
 # Set environment variables to avoid writing .pyc files and to unbuffer Python output
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -17,18 +13,11 @@ RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 # Copy the requirements file
-COPY requirements*.txt .
+COPY requirements-lock.txt .
 
 # Install app dependencies
 # If you use Poetry this step might be different
 RUN /opt/venv/bin/pip install -r requirements-lock.txt
-
-# Run the Guardrails configure command to create a .guardrailsrc file
-RUN guardrails configure --enable-metrics --enable-remote-inferencing  --token $GUARDRAILS_TOKEN
-
-# Install any validators from the hub you want
-RUN guardrails hub install hub://guardrails/regex_match
-
 
 # Start our final image that we'll use
 FROM public.ecr.aws/docker/library/python:3.13-slim
